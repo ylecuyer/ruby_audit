@@ -9,6 +9,7 @@ module RubyAudit
     method_option :ignore, type: :array, aliases: '-i'
     method_option :no_update, type: :boolean, aliases: '-n'
     method_option :verbose, type: :boolean, aliases: '-v'
+    method_option :ruby_version, type: :boolean, aliases: '-r'
     def check
       update unless options[:no_update]
 
@@ -17,7 +18,7 @@ module RubyAudit
       scanner = Scanner.new
       vulnerable = false
 
-      scanner.scan(ignore: options[:ignore]) do |result|
+      scanner.scan(ignore: options[:ignore], ruby_version: options[:ruby_version]) do |result|
         vulnerable = true
         print_advisory result.gem, result.advisory
       end
